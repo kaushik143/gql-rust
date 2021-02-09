@@ -35,7 +35,7 @@ pub async fn graphql(
 
 pub fn playground() -> HttpResponse {
     // I prefer playground but you can use graphiql as well
-    let html = playground_source("http://127.0.0.1:8080/graphql", Option::from(""));
+    let html = playground_source("http://0.0.0.0:8080/graphql", Option::from(""));
     HttpResponse::Ok()
         .content_type("text/html; charset=utf-8")
         .body(html)

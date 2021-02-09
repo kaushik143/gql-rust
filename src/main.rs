@@ -17,11 +17,11 @@ async fn main() -> std::io::Result<()> {
             .data(schema.clone())
             .configure(graphql::route)
     })
-    .bind(("127.0.0.1", 8080))
+    .bind(("0.0.0.0", 8080))
     .unwrap()
     .run();
 
-    eprintln!("Listening on 127.0.0.1:8080");
+    eprintln!("Listening on 0.0.0.0:8080");
 
     server.await
 }
