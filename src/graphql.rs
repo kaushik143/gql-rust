@@ -23,6 +23,7 @@ pub async fn graphql(
         base: config.base,
     };
 
+    print!("{:?}", "executing query".to_owned());
     // Execute
     let res = gql_req.execute(&schema, &ctx).await;
 

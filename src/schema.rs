@@ -1,15 +1,13 @@
 use juniper::{
     graphql_object, graphql_value, EmptyMutation, EmptySubscription, FieldError, FieldResult,
-    GraphQLInputObject,
 };
 use reqwest::header::{HeaderMap, CONNECTION, CONTENT_TYPE};
-use serde::{Deserialize, Serialize};
+
 use std::fmt::Debug;
 
 use crate::model::{
     Artwork, ContestCategory, ContestListResponse, ContestSection, Currency, DisplayContest,
-    IMatch, MatchStatus, PreRoundLockJoinedContestsResponse, RoundResponse, RoundTourResponse,
-    Tour,
+    IMatch, MatchStatus, PreRoundLockJoinedContestsResponse, RoundTourResponse, Tour,
 };
 
 #[derive(Clone)]
@@ -127,6 +125,7 @@ impl Query {
                     Ok(joinContest) => {
                         let contest_section_response =
                             contestSections(&res, &contest, &joinContest);
+                        print!("{:?}", "return".to_owned());
                         Ok(contest_section_response)
                     }
                     Err(err) => {
@@ -179,7 +178,10 @@ where
         .await;
 
     match res {
-        Err(_) => Err(field_error("Request failure")),
+        Err(err) => {
+            println!("{:?}", err);
+            Err(field_error("Request failure"))
+        }
         Ok(data) => {
             let decode = data.json::<D>().await;
             decode
