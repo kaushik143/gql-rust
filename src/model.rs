@@ -1,15 +1,15 @@
-use juniper::{GraphQLObject, GraphQLEnum};
+use async_graphql::{Enum, SimpleObject};
 #[derive(serde::Deserialize, Debug)]
 pub struct Matches {
     id: i32,
     RoundId: i32,
-    MatchId: i32
+    MatchId: i32,
 }
 
 #[derive(serde::Deserialize, Debug)]
 pub struct Round {
     pub id: i32,
-    pub RoundCalcStatus: i32
+    pub RoundCalcStatus: i32,
 }
 #[derive(serde::Deserialize, Debug)]
 pub struct RoundTour {
@@ -17,12 +17,12 @@ pub struct RoundTour {
     pub TourName: String,
     TourShortName: String,
     TourTag: String,
-    TourFormat: String
+    TourFormat: String,
 }
 #[derive(serde::Deserialize, Debug)]
 pub struct WLS {
     id: i32,
-    WLSUrl: String
+    WLSUrl: String,
 }
 
 #[derive(serde::Deserialize, Debug)]
@@ -31,35 +31,35 @@ pub struct RoundResponse {
     tour: RoundTour,
     wls: Vec<WLS>,
     matches: Vec<Matches>,
-    summary: Summary
+    summary: Summary,
 }
 
 #[derive(serde::Deserialize, Debug)]
 pub struct Summary {
-    pcStack: String
+    pcStack: String,
 }
 #[derive(serde::Deserialize, Debug)]
 pub struct Squad {
     GameId: i32,
-    GameName: String
+    GameName: String,
 }
 #[derive(serde::Deserialize, Debug)]
 pub struct TossResult {
     tossWonBy: Option<String>,
-    tossDecision: Option<String>
+    tossDecision: Option<String>,
 }
 #[derive(serde::Deserialize, Debug)]
 pub struct RoundTourResponse {
     pub round: Round,
     pub tour: RoundTour,
     squads: Vec<Squad>,
-    tossResult: TossResult
+    tossResult: TossResult,
 }
 
 #[derive(serde::Deserialize, Debug)]
 pub struct ContestListData {
     pub seeAllConfig: Vec<SeeAllConfig>,
-    pub sections: Vec<Section>
+    pub sections: Vec<Section>,
 }
 
 #[derive(serde::Deserialize, Debug)]
@@ -81,32 +81,32 @@ pub struct League {
 }
 
 #[derive(serde::Deserialize, Debug)]
-pub struct ContestListResponse{
+pub struct ContestListResponse {
     pub data: ContestListData,
 }
 
 #[derive(serde::Deserialize, Debug)]
-pub struct SectionConfig{
+pub struct SectionConfig {
     pub id: i32,
     pub title: String,
     pub subTitle: String,
     pub imgURL: String,
     pub totalCardCount: i32,
-    pub showCardCount: i32
+    pub showCardCount: i32,
 }
 
 #[derive(serde::Deserialize, Debug)]
-pub struct Section{
+pub struct Section {
     pub sectionConfig: SectionConfig,
-    pub leagues: Vec<League>
+    pub leagues: Vec<League>,
 }
 
 #[derive(serde::Deserialize, Debug)]
-pub struct SeeAllConfig{
-    id: i32
+pub struct SeeAllConfig {
+    id: i32,
 }
 #[derive(serde::Deserialize, Debug)]
-pub struct Msg{
+pub struct Msg {
     MsgCode: String,
     MsgShowUp: Option<String>,
     MsgType: Option<String>,
@@ -114,7 +114,7 @@ pub struct Msg{
     MsgText: Option<String>,
 }
 #[derive(serde::Deserialize, Debug)]
-pub struct PreRoundLockJoinedContestsResponse{
+pub struct PreRoundLockJoinedContestsResponse {
     success: i32,
     errCode: String,
     msg: Msg,
@@ -125,13 +125,13 @@ pub struct PreRoundLockJoinedContestsResponse{
 
 /// Contest sections response
 #[derive(serde::Deserialize, Debug)]
-pub struct JoinedLeagues{
+pub struct JoinedLeagues {
     Leagues: Vec<League>,
     MatchStatus: String,
 }
 
 #[derive(serde::Deserialize, Debug)]
-pub struct RoundInfo{
+pub struct RoundInfo {
     TourName: String,
     TourTag: String,
     TourFormat: String,
@@ -142,45 +142,45 @@ pub struct RoundInfo{
     showPlayerImages: i32,
 }
 
-#[derive(GraphQLObject, serde::Deserialize, Debug)]
-pub struct Tag{
-    text: Option<String>
+#[derive(SimpleObject, serde::Deserialize, Debug)]
+pub struct Tag {
+    text: Option<String>,
 }
 
-#[derive(GraphQLEnum, serde::Deserialize, Debug)]
+#[derive(Clone, Copy, PartialEq, Eq, Enum, serde::Deserialize, Debug)]
 pub enum ContestCategory {
     PAID,
-    FREE
+    FREE,
 }
-#[derive(GraphQLObject, serde::Deserialize, Debug)]
-  pub struct Currency{
+#[derive(SimpleObject, serde::Deserialize, Debug)]
+pub struct Currency {
     pub amount: f64,
     pub symbol: String,
-  }
+}
 
-  #[derive(GraphQLEnum, serde::Deserialize, Debug)]
-  pub enum MatchStatus {
+#[derive(Clone, Copy, PartialEq, Eq, Enum, serde::Deserialize, Debug)]
+pub enum MatchStatus {
     ABANDONED,
     COMPLETED,
     IN_PROGRESS,
     NOT_STARTED,
     WAITING_FOR_REVIEW,
-    UP_COMING
-  }
-  #[derive(GraphQLObject, serde::Deserialize, Debug)]
-  pub struct IMatch{
+    UP_COMING,
+}
+#[derive(SimpleObject, serde::Deserialize, Debug)]
+pub struct IMatch {
     pub(crate) id: i32,
     pub(crate) status: MatchStatus,
-  }
+}
 
-  #[derive(GraphQLObject, serde::Deserialize, Debug)]
-pub struct Tour{
+#[derive(SimpleObject, serde::Deserialize, Debug)]
+pub struct Tour {
     pub(crate) id: i32,
     pub(crate) name: String,
-  }
+}
 
-  #[derive(GraphQLObject, serde::Deserialize, Debug)]
-  pub struct DisplayContest{
+#[derive(SimpleObject, serde::Deserialize, Debug)]
+pub struct DisplayContest {
     pub contestType: String,
     pub isPartnerContest: Option<bool>,
     pub contestName: Option<String>,
@@ -203,16 +203,16 @@ pub struct Tour{
     pub r#match: IMatch,
     pub tour: Tour,
     pub site: String,
-  }
-  #[derive(GraphQLObject, serde::Deserialize, Debug)]
-  pub struct Artwork{
+}
+#[derive(SimpleObject, serde::Deserialize, Debug)]
+pub struct Artwork {
     pub src: String,
     pub height: Option<i32>,
     pub width: Option<i32>,
     pub r#type: Option<String>,
-  }
-  #[derive(GraphQLObject)]
-  pub struct ContestSection{
+}
+#[derive(SimpleObject)]
+pub struct ContestSection {
     pub id: i32,
     pub name: String,
     pub description: String,
@@ -220,5 +220,42 @@ pub struct Tour{
     pub tag: Option<Tag>,
     pub totalContestCount: i32,
     pub displayContests: Vec<DisplayContest>,
-  }
+}
+#[derive(serde::Serialize)]
+pub struct RoundQueryInput {
+    siteId: i32,
+    wlsId: i32,
+    roundId: i32,
+    site: String,
+}
 
+#[derive(serde::Serialize)]
+pub struct ContestQueryInput {
+    tourId: i32,
+    siteId: i32,
+    wlsId: i32,
+    roundId: i32,
+    site: String,
+}
+
+#[derive(serde::Serialize)]
+pub struct PreRoundLockContestQueryInput {
+    tourId: i32,
+    siteId: i32,
+    wlsId: i32,
+    roundId: i32,
+    site: String,
+    contestDB: String,
+    roundCalcStatus: i32,
+    pcStreamingStatus: i32,
+    pcStack: String,
+    isRoundComplete: i32,
+    isRoundLocked: i32,
+    isArchive: i32,
+}
+
+#[derive(Clone)]
+pub struct ContextStruct {
+    pub base_url: String,
+    pub client: actix_web::client::Client,
+}

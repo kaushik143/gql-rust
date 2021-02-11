@@ -6,13 +6,13 @@ edition = "2018"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 [dependencies]
-actix-web = "3.3.2"
+actix-web = { version = "3", features = ["openssl"] }
 actix-http = "2.2.0"
-actix-rt = "1.1.1"
-async-std = "1.8.0"
+actix-rt = "1.1.0"
 serde = "1.0.118"
 serde_json = "1.0.60"
 serde_derive = "1.0.123"
-juniper = "0.15.2"
-reqwest = { version = "0.10.9", features = ["json"] }
-graphql_client = "0.9.0"
+async-graphql = "2.5.2"
+async-graphql-actix-web = "2.5.2"
+log = "0.4.14"
+openssl = "0.10.32"
